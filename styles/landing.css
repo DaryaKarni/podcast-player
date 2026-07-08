@@ -1,0 +1,67 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgb(31, 14, 11);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  padding: 1rem;
+}
+.landing .main-title {
+  display: flex;
+  justify-content: flex-start;
+  font-size: 32px;
+  font-weight: bolder;
+  color: rgb(253, 224, 201);
+  margin: 2rem;
+}
+
+.grid {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(5, max-content);
+  gap: 2rem;
+  padding: 2rem;
+  justify-items: center;
+  align-items: center;
+  justify-self: center;
+}
+
+.card {
+  width: 18rem;
+  height: 24rem;
+  background-color: rgba(71, 32, 26, 0.749);
+  border-radius: 5%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.card .text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: hidden;
+}
+.card .text-block .title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgb(253, 224, 201);
+  font-size: 14px;
+  font-weight: bold;
+}
+.card .text-block .publisher {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(255, 200, 158, 0.66);
+}/*# sourceMappingURL=landing.css.map */
