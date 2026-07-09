@@ -6,8 +6,12 @@ html, body {
   min-height: 100vh;
   background-color: rgb(31, 14, 11);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .landing {
@@ -63,5 +67,18 @@ html, body {
 .card .text-block .publisher {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   color: rgba(255, 200, 158, 0.66);
+}
+
+.loading {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(39, 39, 39, 0.474);
+  color: rgb(253, 224, 201);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
 }/*# sourceMappingURL=landing.css.map */

@@ -1,0 +1,25 @@
+{
+  "name": "podcast-player",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaryaKarni/podcast-player.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DaryaKarni/podcast-player/issues"
+  },
+  "homepage": "https://github.com/DaryaKarni/podcast-player#readme",
+  "dependencies": {
+    "vite": "^8.1.4"
+  }
+}
