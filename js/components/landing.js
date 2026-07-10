@@ -1,6 +1,7 @@
 
 export function buildLanding(arr, name){
   const container = document.getElementById('item-container');
+  container.innerHTML = '';
   container.className = 'landing';
   const title = document.createElement('p');
   title.textContent = name;
@@ -26,13 +27,15 @@ export function createGrid(arr){
 function createCard(podcast){//podcast -- obj
   const card = document.createElement('div');
   card.classList.add('card');
+  card.dataset.link = `#/podcast/${podcast.id}`;
   card.innerHTML = 
   `<img class="card-image" src=${podcast.image || null} alt='card'>
    <div class="text-block">
-    <span class="title">${podcast.title}</span>
-    <span class="publisher">${ podcast.author || podcast.description}</span>
+    <span class="title">${podcast.title || podcast.title_original}</span>
+    <span class="publisher">${ podcast.publisher || podcast.publisher_original}</span>
    </div>
-  `
+  `;
+
   return card;
 }
 

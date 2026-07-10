@@ -1,0 +1,99 @@
+.details {
+  position: relative;
+}
+
+.button-back {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background-color: rgba(255, 200, 158, 0.66);
+  border: none;
+  width: 5rem;
+  height: 3rem;
+  border-radius: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.podcast-description-block {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 4rem 20rem;
+}
+.podcast-description-block .card-image-detailed {
+  width: 35rem;
+  border-radius: 2rem;
+}
+.podcast-description-block .text-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+.podcast-description-block .text-block .publisher {
+  font-size: 24px;
+  color: rgba(255, 200, 158, 0.66);
+  font-weight: 500;
+}
+.podcast-description-block .text-block .description {
+  margin-top: 2rem;
+  font-size: 16px;
+  color: rgba(255, 200, 158, 0.66);
+  font-style: oblique;
+  font-weight: 100;
+}
+
+.title {
+  color: rgb(253, 224, 201);
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.episodes-block {
+  display: flex;
+  padding: 4rem 20rem;
+  flex-direction: column;
+  gap: 4rem;
+}
+.episodes-block .episode {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20rem;
+}
+.episodes-block .episode .ep-left {
+  display: flex;
+  flex-direction: column;
+}
+.episodes-block .episode .ep-left .date {
+  font-size: 12px;
+  color: rgba(255, 200, 158, 0.66);
+  font-style: oblique;
+  font-weight: 100;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+.episodes-block .episode .ep-left .ep-title {
+  font-size: 20px;
+  color: rgba(255, 200, 158, 0.66);
+  font-weight: 500;
+}
+.episodes-block .episode .ep-left .ep-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  color: rgba(253, 224, 201, 0.6);
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-style: oblique;
+}
+.episodes-block .episode .duration {
+  font-size: 16px;
+  color: rgba(255, 200, 158, 0.66);
+  font-weight: 500;
+  white-space: nowrap;
+}/*# sourceMappingURL=details.css.map */

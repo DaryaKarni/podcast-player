@@ -1,10 +1,10 @@
 import {App} from "./api.js";
 import { buildLanding, createGrid, doLoading, removeLoading } from "./components/landing.js";
+import { buildDetails } from "./components/details.js";
+import {Router} from "./router.js";
 
-const apiKey = import.meta.env.VITE_PODCAST_API_KEY;
-const apiSecret = import.meta.env.VITE_PODCAST_API_SECRET;
-
-let offset = 0;
+const apiKey = '';
+let page = 1;
 let isLoading  = false;
 let searchController = null;
 const inputSearch = document.getElementById('search');
@@ -12,35 +12,51 @@ const inputSearch = document.getElementById('search');
 const myApp = new App();
 const observer = new IntersectionObserver(loadMoreCards);
 
+const router = new Router();
+router.addRoute('#/', initApp);
+router.addRoute('#/podcast/:id', initDetails);
 async function initApp(){
-  const data = await myApp.fetchPodcasts(apiKey, apiSecret);
+  const data = await myApp.fetchPodcasts(apiKey);
   if(data){
     console.log('data is loaded: next step - render');
-    buildLanding(data.feeds, 'Best podcasts');
-    offset+=20;
+    buildLanding(data.podcasts, 'Best podcasts');
+    page++;
     const div = document.getElementById('scroll-trigger');
     observer.observe(div);
   }
+}
+async function initDetails(params){
+  doLoading();
+  const data = await myApp.fetchPodcastById(params.id);
+  if(data){
+    const container = document.querySelector('.landing');
+    if (container) container.innerHTML = '';
+    observer.disconnect();
+    buildDetails(data);
+  } else{
+    router.handleRoute("#/404");
+  } 
+  removeLoading();  
 }
 
 async function loadMoreCards(entries){
   if(isLoading) return;
 
-  if(offset >= 60) {
+  if(page>=40) {
     observer.disconnect();
   }
   
   const entry = entries[0];
   if(entry.isIntersecting){
   isLoading = true;
-  const data = await myApp.fetchPodcasts(apiKey, apiSecret, offset);
-  if(!data || !data.feeds){
+  const data = await myApp.fetchPodcasts(apiKey, page);
+  if(!data || !data.podcasts){
     console.log('Server cannot return podcasts(');
     isLoading = false;
     return;
   }
-  createGrid(data.feeds);
-  offset+=20;
+  createGrid(data.podcasts);
+  page++;
   isLoading = false;
   }
 }
@@ -60,8 +76,6 @@ async function handleSearch(event){
   const container = document.querySelector('.landing');
 
   if(query === ''){
-    if(container) container.innerHTML = '';
-    offset = 0;
     observer.disconnect();
     initApp();
     return;
@@ -72,9 +86,11 @@ async function handleSearch(event){
     if(searchController) searchController.abort();
     searchController  = new AbortController();
     try{
-      const json = await myApp.searchPodcasts(apiKey, apiSecret, query, searchController.signal);
+      const json = await myApp.searchPodcasts(apiKey, query, searchController.signal);
       if(json){
-        buildLanding(json.feeds, 'Search results');
+        const podcasts = [];
+        json.results.forEach(res => podcasts.push(res.podcast));
+        buildLanding(podcasts, 'Search results');
       }
     }catch(error){
       if(error.name === 'AbortError') return;
@@ -86,7 +102,7 @@ async function handleSearch(event){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initApp();
+  router.start();
 });
 
 inputSearch.addEventListener('input', debounce(handleSearch, 1000));
