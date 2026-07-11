@@ -1,0 +1,94 @@
+.player {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  height: 10rem;
+  background-color: rgb(31, 14, 11);
+  border-top: 0.1rem solid rgba(255, 200, 158, 0.66);
+  padding: 1.5rem 2rem;
+  box-sizing: border-box;
+  gap: 7rem;
+  .player-cover{
+    width: 40rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.2rem;
+    color: rgba(255, 200, 158, 0.66);
+    img{
+    width: 7rem;
+    height: 7rem;
+    border-radius: 1rem;
+    }
+    .text-small{
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      .name-small{
+        font-size: 14px;
+        font-weight: 500;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+      .author-small{
+        font-size: 12px;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        color: rgba(253, 224, 201, 0.6);
+      }
+    }
+    .fav-button{
+      width: 2.5rem;
+      height: auto;
+      color: rgba(253, 224, 201, 0.6);
+    }
+  }
+  .player-road{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60rem;
+    gap: 1rem;
+    .up-player{
+      .ep-player-button{
+        width: 4rem;
+        color: rgba(253, 224, 201);
+      }
+    }
+    .down-player{
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+        .progress-bar{
+        position: relative;
+        background-color: rgba(253, 224, 201);
+        width: 50rem;
+        height: 0.3rem;
+        border-radius: 1rem;
+        }
+        .progress-point{
+          position: absolute;
+          width: 2rem;
+          height: 2rem;
+          border-radius: 2rem;
+          top: 50%;
+          background-color: rgba(253, 224, 201);
+          transform: translateY(-45%) translateX(0);
+          transition: transform 0.2s linear;
+        }
+    
+    }
+    .time{
+      color: rgb(255, 200, 158);
+      font-size: 14px;
+    }
+  }
+}
+.hidden{
+  display: none;
+}

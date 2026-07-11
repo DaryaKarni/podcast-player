@@ -2,6 +2,7 @@ import {App} from "./api.js";
 import { buildLanding, createGrid, doLoading, removeLoading } from "./components/landing.js";
 import { buildDetails } from "./components/details.js";
 import {Router} from "./router.js";
+import {Player} from './components/player.js';
 
 const apiKey = '';
 let page = 1;
@@ -15,6 +16,9 @@ const observer = new IntersectionObserver(loadMoreCards);
 const router = new Router();
 router.addRoute('#/', initApp);
 router.addRoute('#/podcast/:id', initDetails);
+
+const player = new Player();
+
 async function initApp(){
   const data = await myApp.fetchPodcasts(apiKey);
   if(data){
@@ -32,7 +36,7 @@ async function initDetails(params){
     const container = document.querySelector('.landing');
     if (container) container.innerHTML = '';
     observer.disconnect();
-    buildDetails(data);
+    buildDetails(data, player);
   } else{
     router.handleRoute("#/404");
   } 

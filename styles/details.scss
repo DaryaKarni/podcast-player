@@ -5,7 +5,7 @@
   position: absolute;
   left: 1rem;
   top: 1rem;
-  background-color: rgba(255, 200, 158, 0.66);
+  background-color: rgb(172, 126, 91);
   border: none;
   width: 5rem;
   height: 3rem;
@@ -49,18 +49,42 @@
   }
 .episodes-block{
   display: flex;
-  padding: 4rem 20rem;
+  padding: 4rem 12rem;
   flex-direction: column;
   gap: 4rem;
+  .eps-title{
+    margin-left: 8rem;
+  }
   .episode{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     gap: 20rem;
+    padding: 2rem 8rem 2rem 0;
+    border-radius: 2rem;
+    position: relative;
+    transition: all 0.3s ease;
+    .ep-play-button{
+      position: absolute;
+      width: 5rem;
+      color:rgb(253, 224, 201);
+      top: 2rem;
+      left: 2rem;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    &:hover, &.active{
+      background-color: rgba(71, 32, 26, 0.749);
+      .ep-play-button{
+        opacity: 1;
+        cursor: pointer;
+      }
+    } 
     .ep-left{
       display: flex;
       flex-direction: column;
+      margin-left: 8rem;
       .date{
         font-size: 12px;
       color: rgba(255, 200, 158, 0.66);
@@ -71,7 +95,7 @@
       }
       .ep-title{
         
-        font-size: 20px;
+      font-size: 20px;
       color: rgba(255, 200, 158, 0.66);
       font-weight: 500;
       }
@@ -94,4 +118,7 @@
       white-space: nowrap;
     }
   }
+}
+.hidden{
+  display: none;
 }
