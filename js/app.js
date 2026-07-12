@@ -16,6 +16,7 @@ const observer = new IntersectionObserver(loadMoreCards);
 const router = new Router();
 router.addRoute('#/', initApp);
 router.addRoute('#/podcast/:id', initDetails);
+router.addRoute('#/playlist', initPlaylist);
 
 const player = new Player();
 
@@ -33,13 +34,23 @@ async function initDetails(params){
   doLoading();
   const data = await myApp.fetchPodcastById(params.id);
   if(data){
-    const container = document.querySelector('.landing');
-    if (container) container.innerHTML = '';
     observer.disconnect();
     buildDetails(data, player);
   } else{
     router.handleRoute("#/404");
   } 
+  removeLoading();  
+}
+
+async function initPlaylist(){
+  doLoading();
+  const podcasts = JSON.parse(localStorage.getItem('podcast-player:playlist'));
+  if(podcasts){
+  observer.disconnect();
+  buildLanding( podcasts, 'Playlist');
+  }else{
+    buildLanding( null, 'Playlist');
+  }
   removeLoading();  
 }
 

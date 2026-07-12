@@ -17,8 +17,10 @@ body{
 .landing {
   display: flex;
   flex-direction: column;
-  width: fit-content;
-  padding: 1rem;
+  width: 100%;
+  align-items: center;
+  padding: 2rem 0;
+  position: relative;
   .main-title{
     display: flex;
     justify-content: flex-start;
@@ -26,6 +28,9 @@ body{
     font-weight: bolder;
     color: rgb(253, 224, 201);
     margin: 2rem;
+    align-self: flex-start;
+    position: relative;
+    left: 20rem;
   }
 }
 
@@ -48,7 +53,10 @@ body{
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-
+  position: relative;
+  img{
+    aspect-ratio: 1/1;
+  }
   .text-block{
     display: flex;
     flex-direction: column;
@@ -72,13 +80,23 @@ body{
       margin: 0;
     }
   }
+  .button-remove{
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    color: rgba(255, 200, 158, 0.66);
+    background-color: rgb(31, 14, 11);
+    border-radius: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 } 
 
 .loading {
-  position: absolute;
+  position: fixed;
   width: 100vw;
-  height: 100vh;
-  background-color: rgba(39, 39, 39, 0.474);
+  min-height: 100vh;
+  background-color: rgba(39, 39, 39, 0.8);
   color: rgba(253, 224, 201);
   display: flex;
   justify-content: center;

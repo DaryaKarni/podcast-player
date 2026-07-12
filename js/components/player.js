@@ -1,16 +1,34 @@
+import { addToPlaylist, removeFromPlaylist, isExist } from "./playlist.js";
 export class Player{
   audio = new Audio();
   id = null;
   playPromise = null;
   currentTime = 0;
-  // updateInfo(ep, publisher, isPlaying, currentTime, fullTime){
-  //   this.id = ep.id
-  //   this.name = ep.title;
-  //   this.publisher = publisher;
-  //   this.inPlaying = isPlaying;
-  //   this.currentTime = currentTime;
-  //   this.fullTime = fullTime;
-  // }
+
+  getSavedPositions(){
+    const stored = localStorage.getItem('podcast-player:positions');
+    return stored ? JSON.parse(stored) : {};
+  }
+
+  savePositions(id, time){
+    const positions = this.getSavedPositions();
+    positions[id] = time;
+    localStorage.setItem('podcast-player:positions', JSON.stringify(positions));
+  }
+
+  updateFavButtonState(){
+    const playerEl = document.getElementById('player');
+    if(!playerEl) return;
+    const addSvg = playerEl.querySelector('.add-button');
+    const removeSvg = playerEl.querySelector('.remove-button');
+    if (isExist(this.currentTrack)) {
+      addSvg.classList.add('hidden');
+      removeSvg.classList.remove('hidden');
+    } else {
+      addSvg.classList.remove('hidden');
+      removeSvg.classList.add('hidden');
+    }
+  }
   changeButton(isPlaying){
     const playerElement = document.getElementById('player');
     if (!playerElement) return;
@@ -50,19 +68,35 @@ export class Player{
     const player = document.getElementById('player');
     this.currentTrack = ep;
     this.currentPublisher = publisher;
+    let isNewTrack = false;
     if(!player){
       this.buildPlayer(ep, publisher);
       this.audio.src = ep.audio;
       this.id = ep.id;
+      isNewTrack = true;
     } else if (this.id !== ep.id){
         this.rerenderPlayer(ep, publisher);
         this.audio.src = ep.audio;
         this.id = ep.id;
+        isNewTrack = true;
     }
+    if (isNewTrack) {
+      const positions = this.getSavedPositions();
+      if (positions[this.id]) {
+        const resumeTime = Math.max(0, positions[this.id] - 10);
+        const onMetadata = () => {
+          this.audio.currentTime = resumeTime;
+          this.audio.removeEventListener('loadedmetadata', onMetadata);
+        };
+        this.audio.addEventListener('loadedmetadata', onMetadata);
+        }
+        this.updateFavButtonState();
+      }
     this.changePlayerState(isPlaying);
-    //this.updateInfo(ep, publisher, isPlaying, currentTime, fullTime);
     this.changeButton(isPlaying);
   }
+
+
   rerenderPlayer(ep, publisher){
     const player = document.getElementById('player');
     const img = player.querySelector('[data-img]');
@@ -85,12 +119,12 @@ export class Player{
           <span class='name-small'>${ep.title}</span>
           <span class='author-small'>${publisher}</span>
         </div>  
-        <div class='fav-button'>
-          <svg class='add-button' xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+        <div class='fav-button ep-fav-button'>
+          <svg data-action='add' class='add-button' xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
           </svg>
-          <svg class='remove-button hidden' xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+          <svg data-action='remove' class='remove-button hidden' xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
           </svg>
@@ -118,16 +152,49 @@ export class Player{
       </div>
     `;
     document.body.append(player);
+    
+    const favButton = player.querySelector('.fav-button');
+    favButton.addEventListener('click', (e) => {
+      const currentSvg = e.target.closest('svg:not(.hidden)');
+      if (!currentSvg) return;
+      if (currentSvg.dataset.action === 'add') {
+        addToPlaylist(this.currentTrack);
+      } else {
+        removeFromPlaylist(this.currentTrack);
+      }
+      this.updateFavButtonState();
+      const episodeInList = document.querySelector(`.episode[data-id="${this.id}"]`);
+      if (episodeInList) {
+        const listAddBtn = episodeInList.querySelector('.add-button');
+        const listRemoveBtn = episodeInList.querySelector('.remove-button');
+        if (isExist(this.currentTrack)) {
+          listAddBtn.classList.add('hidden');
+          listRemoveBtn.classList.remove('hidden');
+        } else {
+          listAddBtn.classList.remove('hidden');
+          listRemoveBtn.classList.add('hidden');
+        }
+      }
+     });
     const buttonPlay = player.querySelector('.ep-player-button');
     buttonPlay.addEventListener('click', () => {
+      const shouldPlay = this.audio.paused;
+      this.changePlayerState(shouldPlay);
+      this.changeButton(shouldPlay);
       const episode = document.querySelector(`[data-id='${this.id}']`);
-      if(episode){
-        const epButton = episode.querySelector('.ep-play-button');
-        epButton.click();
-      } else{
-        this.togglePlayer(this.currentTrack, this.currentPublisher, !this.audio.paused);
+      if (episode) {
+        const pauseSvg = episode.querySelector('.ep-pause'); 
+        const playSvg = episode.querySelector('.ep-play'); 
+      if (shouldPlay) {
+        episode.classList.add('active');
+        pauseSvg.classList.add('hidden');
+        playSvg.classList.remove('hidden');
+      } else {
+        pauseSvg.classList.remove('hidden');
+        playSvg.classList.add('hidden');
       }
-    });
+  }
+});
     const currTimeEl = player.querySelector('.current');
     const point = player.querySelector('.progress-point');
     this.audio.addEventListener('timeupdate', () => {
@@ -137,6 +204,10 @@ export class Player{
       currTimeEl.textContent = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
       const progress = this.audio.currentTime / this.audio.duration * 100;
       point.style.left= `${progress}%`;  
+
+      if (this.id && this.audio.currentTime > 0) {
+        this.savePositions(this.id, this.audio.currentTime);
+      }
     });
 
     const progressBar = player.querySelector('.progress-bar');

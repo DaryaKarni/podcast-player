@@ -17,6 +17,12 @@ export class Router {
         this.goBack();
       }
     });
+    document.addEventListener('click', (e) => {
+      const playlistButton = e.target.closest('.playlist-button');
+      if(playlistButton){
+        this.navigate('#/playlist');
+      }
+    })
   }
   goBack(){
     window.history.back();
