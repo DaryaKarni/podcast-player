@@ -137,6 +137,17 @@ export class Player{
       currTimeEl.textContent = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
       const progress = this.audio.currentTime / this.audio.duration * 100;
       point.style.left= `${progress}%`;  
+    });
+
+    const progressBar = player.querySelector('.progress-bar');
+    progressBar.addEventListener('click', (e) => {
+      const barWidth = progressBar.clientWidth;
+      const offsetX = e.offsetX;
+      const percentage = (offsetX/barWidth) * 100;
+      point.style.left = `${percentage}%`;
+      if(this.audio.duration){
+        this.audio.currentTime = (offsetX/barWidth) * this.audio.duration;
+      }
     })
   }
 }

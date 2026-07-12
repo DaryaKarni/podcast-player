@@ -107,6 +107,7 @@
 }
 .episodes-block .episode .ep-left .ep-description {
   display: -webkit-box;
+  line-clamp: 5;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
   color: rgba(253, 224, 201, 0.6);
