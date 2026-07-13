@@ -1,0 +1,68 @@
+html {
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(31, 14, 11);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+header {
+  background-color: rgba(71, 32, 26, 0.749);
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: 0;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: inherit;
+}
+.nav-container .playlist-button {
+  margin-top: 0.2rem;
+  color: rgb(253, 224, 201);
+  cursor: pointer;
+}
+.nav-container .playlist-button svg {
+  width: 3rem;
+  height: auto;
+}
+.nav-container .search-block {
+  position: relative;
+}
+.nav-container .search-block #search {
+  width: 25rem;
+  height: 3rem;
+  border-radius: 2rem;
+  font-size: 16px;
+  padding: 0.5rem 1rem 0.5rem;
+  border: none;
+}
+.nav-container .search-block .search-button {
+  position: absolute;
+  right: 2rem;
+  transform: translateY(70%);
+}
+
+.button-back {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background-color: rgb(172, 126, 91);
+  border: none;
+  width: 5rem;
+  height: 3rem;
+  border-radius: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}/*# sourceMappingURL=app.css.map */

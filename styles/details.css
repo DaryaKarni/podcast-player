@@ -1,0 +1,127 @@
+.details {
+  position: relative;
+}
+
+.podcast-description-block {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 4rem 20rem;
+}
+.podcast-description-block .card-image-detailed {
+  width: 35rem;
+  border-radius: 2rem;
+}
+.podcast-description-block .text-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+.podcast-description-block .text-block .publisher {
+  font-size: 24px;
+  color: rgba(255, 200, 158, 0.66);
+  font-weight: 500;
+}
+.podcast-description-block .text-block .description {
+  margin-top: 2rem;
+  font-size: 16px;
+  color: rgba(255, 200, 158, 0.66);
+  font-style: oblique;
+  font-weight: 100;
+}
+
+.title {
+  color: rgb(253, 224, 201);
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.episodes-block {
+  display: flex;
+  padding: 4rem 12rem;
+  flex-direction: column;
+  gap: 4rem;
+}
+.episodes-block .eps-title {
+  margin-left: 8rem;
+}
+.episodes-block .episode {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20rem;
+  padding: 2rem 8rem 2rem 0;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.episodes-block .episode .ep-buttons {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  gap: 8rem;
+  left: 2rem;
+  align-items: center;
+}
+.episodes-block .episode .ep-buttons .ep-play-button {
+  width: 5rem;
+  color: rgb(253, 224, 201);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.episodes-block .episode .ep-buttons .fav-button {
+  width: 3rem;
+  color: rgba(253, 224, 201, 0.6);
+  opacity: 0;
+  position: relative;
+  left: -0.4rem;
+  transition: all 0.3s ease;
+}
+.episodes-block .episode:hover, .episodes-block .episode.active {
+  background-color: rgba(71, 32, 26, 0.749);
+}
+.episodes-block .episode:hover .ep-play-button, .episodes-block .episode:hover .fav-button, .episodes-block .episode.active .ep-play-button, .episodes-block .episode.active .fav-button {
+  opacity: 1;
+  cursor: pointer;
+}
+.episodes-block .episode .ep-left {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8rem;
+}
+.episodes-block .episode .ep-left .date {
+  font-size: 12px;
+  color: rgba(255, 200, 158, 0.66);
+  font-style: oblique;
+  font-weight: 100;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+.episodes-block .episode .ep-left .ep-title {
+  font-size: 20px;
+  color: rgba(255, 200, 158, 0.66);
+  font-weight: 500;
+}
+.episodes-block .episode .ep-left .ep-description {
+  display: -webkit-box;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  color: rgba(253, 224, 201, 0.6);
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-style: oblique;
+}
+.episodes-block .episode .duration {
+  font-size: 16px;
+  color: rgba(255, 200, 158, 0.66);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hidden {
+  display: none;
+}/*# sourceMappingURL=details.css.map */
